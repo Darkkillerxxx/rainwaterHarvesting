@@ -16,44 +16,46 @@ export default function Dashboard() {
           <h2 className="">Rain Water Harvesting Dashboard</h2>
           <h1 style={{ marginTop: 0 }}>Gujarat</h1>
         </div>
-        {/* <h1>Gujarat State</h1> */}
         <SimpleStats />
       </div>
-      <div className="city-banner">
-        <h1>Surat</h1>
-        <select
-          value={selectedCity}
-          onChange={(e) => {
-            setSelectedCity(e.target.value);
-          }}
-        >
-          <option>Surat</option>
-          <option>Navsari</option>
-        </select>
-      </div>
       <div className="middle-content">
-        <div className="middle-child map">
+        <div className="middle-child map card">
           <MapComponent city={selectedCity} />
         </div>
-        <div className="middle-child pie-chart">
-          <PieChart />
-        </div>
-        <div className="middle-child other-metrics">
-          <GaugeChart
-            value={381}
-            maxValue={2040}
-            title="Inauguration"
-            color="#90EE90"
-          />
-          <GaugeChart
-            value={16}
-            maxValue={2040}
-            title="Completed"
-            color="#FFA500"
-          />
+        <div className="card">
+          <div className="city-banner">
+            <h1>Surat</h1>
+            <select
+              value={selectedCity}
+              onChange={(e) => {
+                setSelectedCity(e.target.value);
+              }}
+            >
+              <option>Surat</option>
+              <option>Navsari</option>
+            </select>
+          </div>
+          <div className="middle-child other-metrics ">
+            <GaugeChart
+              value={381}
+              maxValue={2040}
+              title="Inauguration"
+              color="#90EE90"
+            />
+            <GaugeChart
+              value={16}
+              maxValue={2040}
+              title="Completed"
+              color="#FFA500"
+            />
+          </div>
         </div>
       </div>
-      <div className="bar-graph-container">
+
+      <div className="middle-child pie-chart card">
+        <PieChart />
+      </div>
+      <div className="bar-graph-container card">
         <StackedBarChart />
       </div>
     </>

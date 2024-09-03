@@ -11,7 +11,7 @@ export default function MapComponent(props) {
         <img
           src="./MapSurat.png"
           alt="Map of Surat"
-          style={{ height: "35vh", width: "100%", objectFit: "cover" }}
+          style={{ height: "70vh", width: "100%", objectFit: "cover" }}
         />
       </div>
     </>

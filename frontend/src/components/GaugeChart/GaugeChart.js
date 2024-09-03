@@ -18,7 +18,7 @@ const GaugeChart = ({ value, maxValue, title, color }) => {
         .attr("width", width)
         .attr("height", height)
         .append("g")
-        .attr("transform", `translate(${width/2},${height/1.5})`);
+        .attr("transform", `translate(${width / 2},${height / 1.5})`);
 
       const scale = d3.scaleLinear().domain([0, maxValue]).range([0, 180]);
 
@@ -30,11 +30,7 @@ const GaugeChart = ({ value, maxValue, title, color }) => {
         .endAngle((d) => (scale(d) * Math.PI) / 180 - Math.PI / 2);
 
       // Background arc
-      svg
-        .append("path")
-        .datum(maxValue)
-        .attr("fill", "#e6e6e6")
-        .attr("d", arc);
+      svg.append("path").datum(maxValue).attr("fill", "#e6e6e6").attr("d", arc);
 
       // Value arc
       svg.append("path").datum(value).attr("fill", color).attr("d", arc);
@@ -43,7 +39,7 @@ const GaugeChart = ({ value, maxValue, title, color }) => {
       svg
         .append("text")
         .attr("text-anchor", "middle")
-        .attr("dy", "-6em")
+        .attr("dy", `-${radius * 0.8}px`)
         .style("font-size", "16px")
         .text(title);
 
@@ -51,7 +47,7 @@ const GaugeChart = ({ value, maxValue, title, color }) => {
       svg
         .append("text")
         .attr("text-anchor", "middle")
-        .attr("dy", "-0.2em")
+        .attr("dy", "0.3em")
         .style("font-size", "24px")
         .text(value);
 
@@ -60,7 +56,7 @@ const GaugeChart = ({ value, maxValue, title, color }) => {
         .append("text")
         .attr("text-anchor", "start")
         .attr("x", -radius + 10)
-        .attr("y", 20)
+        .attr("y", radius * 0.6)
         .style("font-size", "12px")
         .text("0");
 
@@ -69,13 +65,13 @@ const GaugeChart = ({ value, maxValue, title, color }) => {
         .append("text")
         .attr("text-anchor", "end")
         .attr("x", radius - 10)
-        .attr("y", 20)
+        .attr("y", radius * 0.6)
         .style("font-size", "12px")
         .text(maxValue);
     }
   }, [value, maxValue, title, color]);
 
-  return <div ref={chartRef} style={{ width: "100%", height: "120px" }}></div>;
+  return <div ref={chartRef} style={{ width: "100%", height: "200px", marginBottom: "20px" }}></div>;
 };
 
 export default React.memo(GaugeChart);

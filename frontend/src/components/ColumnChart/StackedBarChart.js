@@ -35,7 +35,10 @@ export default React.memo(function ColumnChart() {
         { taluka: "Umarpada", values: [304] },
       ];
 
-      const stack = d3.stack().keys(d3.range(5)).value((d, key) => d.values[key] || 0);
+      const stack = d3
+        .stack()
+        .keys(d3.range(5))
+        .value((d, key) => d.values[key] || 0);
 
       const series = stack(data);
 
@@ -54,7 +57,10 @@ export default React.memo(function ColumnChart() {
 
       svg
         .append("g")
-        .attr("transform", `translate(0,${height - margin.top - margin.bottom})`)
+        .attr(
+          "transform",
+          `translate(0,${height - margin.top - margin.bottom})`,
+        )
         .call(d3.axisBottom(x))
         .selectAll("text")
         .attr("transform", "rotate(-45)")
@@ -85,7 +91,13 @@ export default React.memo(function ColumnChart() {
         .attr("font-size", 10)
         .attr("text-anchor", "end")
         .selectAll("g")
-        .data(["ENG GRANT", "15th Finance Commission", "District Panchayat Self-Funding", "MGNREGA & DMF Grant", "MGNREGA Grant & Other"])
+        .data([
+          "ENG GRANT",
+          "15th Finance Commission",
+          "District Panchayat Self-Funding",
+          "MGNREGA & DMF Grant",
+          "MGNREGA Grant & Other",
+        ])
         .enter()
         .append("g")
         .attr("transform", (d, i) => `translate(0,${i * 20})`);
@@ -106,5 +118,6 @@ export default React.memo(function ColumnChart() {
     }
   }, []);
 
-  return <div ref={chartRef} style={{ width: "100%", height: "40vh" }}></div>;
+  return <div ref={chartRef} style={{ height: "60vh" }}></div>;
 });
+

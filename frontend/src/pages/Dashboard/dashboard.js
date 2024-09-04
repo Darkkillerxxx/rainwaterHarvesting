@@ -19,7 +19,7 @@ export default function Dashboard() {
         <SimpleStats />
       </div>
       <div className="middle-content">
-        <div className="middle-child map card">
+        <div className="strech-self map card">
           <MapComponent city={selectedCity} />
         </div>
         <div className="card">
@@ -35,7 +35,7 @@ export default function Dashboard() {
               <option>Navsari</option>
             </select>
           </div>
-          <div className="middle-child other-metrics ">
+          <div className="strech-self other-metrics ">
             <GaugeChart
               value={381}
               maxValue={2040}
@@ -52,7 +52,7 @@ export default function Dashboard() {
         </div>
       </div>
 
-      <div className="middle-child pie-chart card">
+      <div className="strech-self pie-chart card">
         <PieChart />
       </div>
       <div className="bar-graph-container card">

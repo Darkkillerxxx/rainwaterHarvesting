@@ -4,6 +4,7 @@
   justify-content: space-between;
   gap: 3em;
   padding-top: 2em;
+  margin-bottom: 2em;
 }
 
 .logo {
@@ -21,36 +22,41 @@
 .city-banner {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  padding: 0 4em 0;
+  padding: 0 1em 0;
   place-items: center;
+  justify-content: space-between;
 }
 
-/* .city-banner h1 { */
-/*   grid-column-start: 2; */
-/* } */
-/**/
-/* .city-banner select { */
-/*   height: 2em; */
-/*   width: 10em; */
-/*   justify-self: end; */
-/* } */
+.city-banner h1 {
+  justify-self: start;
+}
+
+.city-banner select {
+  height: 2em;
+  width: 10em;
+  justify-self: end;
+}
 
 .middle-content {
   display: grid;
   justify-self: flex-start;
+  margin-bottom: 4em;
   padding: 0 4em 0;
   grid-template-columns: 3fr 2fr;
   gap: 2em;
 }
 
-.middle-child {
+.strech-self {
   place-self: center stretch;
 }
 
 .bar-graph-container {
-  width: 100%;
-  height: 400px;
+  /* width: 100%; */
   margin: 1em 0 0;
+}
+
+.pie-chart {
+  margin-bottom: 4em;
 }
 
 .other-metrics {

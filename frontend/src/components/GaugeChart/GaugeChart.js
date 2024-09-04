@@ -39,7 +39,7 @@ const GaugeChart = ({ value, maxValue, title, color }) => {
       svg
         .append("text")
         .attr("text-anchor", "middle")
-        .attr("dy", `-${radius * 0.8}px`)
+        .attr("dy", `-${radius * 1.1}px`)
         .style("font-size", "16px")
         .text(title);
 
@@ -47,7 +47,7 @@ const GaugeChart = ({ value, maxValue, title, color }) => {
       svg
         .append("text")
         .attr("text-anchor", "middle")
-        .attr("dy", "0.3em")
+        .attr("dy", "-0.2em")
         .style("font-size", "24px")
         .text(value);
 
@@ -56,7 +56,7 @@ const GaugeChart = ({ value, maxValue, title, color }) => {
         .append("text")
         .attr("text-anchor", "start")
         .attr("x", -radius + 10)
-        .attr("y", radius * 0.6)
+        .attr("y", 20)
         .style("font-size", "12px")
         .text("0");
 
@@ -65,13 +65,18 @@ const GaugeChart = ({ value, maxValue, title, color }) => {
         .append("text")
         .attr("text-anchor", "end")
         .attr("x", radius - 10)
-        .attr("y", radius * 0.6)
+        .attr("y", 20)
         .style("font-size", "12px")
         .text(maxValue);
     }
   }, [value, maxValue, title, color]);
 
-  return <div ref={chartRef} style={{ width: "100%", height: "200px", marginBottom: "20px" }}></div>;
+  return (
+    <div
+      ref={chartRef}
+      style={{ width: "100%", height: "120px", marginBottom: "4em" }}
+    ></div>
+  );
 };
 
 export default React.memo(GaugeChart);

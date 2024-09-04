@@ -10,7 +10,7 @@ export default React.memo(function PieChart() {
 
       const width = chartRef.current.clientWidth;
       const height = chartRef.current.clientHeight;
-      const radius = Math.min(width, height) / 2 * 0.8;
+      const radius = (Math.min(width, height) / 2) * 0.8;
 
       const svg = d3
         .select(chartRef.current)
@@ -34,7 +34,10 @@ export default React.memo(function PieChart() {
         .sort(null);
 
       const arc = d3.arc().innerRadius(0).outerRadius(radius);
-      const outerArc = d3.arc().innerRadius(radius * 1.1).outerRadius(radius * 1.1);
+      const outerArc = d3
+        .arc()
+        .innerRadius(radius * 1.1)
+        .outerRadius(radius * 1.1);
 
       const arcs = svg
         .selectAll("arc")
@@ -54,11 +57,11 @@ export default React.memo(function PieChart() {
 
       arcs
         .append("text")
-        .attr("transform", function(d, i) {
+        .attr("transform", function (d, i) {
           const pos = outerArc.centroid(d);
           pos[0] = radius * (midAngle(d) < Math.PI ? 1.1 : -1.1);
-          
-          const percent = (d.endAngle - d.startAngle) / (2 * Math.PI) * 100;
+
+          const percent = ((d.endAngle - d.startAngle) / (2 * Math.PI)) * 100;
           if (percent < 3) {
             pos[1] += i * 15;
           }
@@ -67,17 +70,17 @@ export default React.memo(function PieChart() {
         .text((d) => d.data.label)
         .attr("font-size", "10px")
         .attr("fill", (d, i) => color(i))
-        .attr("text-anchor", (d) => midAngle(d) < Math.PI ? "start" : "end")
-        .attr("dx", (d) => midAngle(d) < Math.PI ? 5 : -5)
+        .attr("text-anchor", (d) => (midAngle(d) < Math.PI ? "start" : "end"))
+        .attr("dx", (d) => (midAngle(d) < Math.PI ? 5 : -5))
         .attr("dy", 5);
 
       arcs
         .append("polyline")
-        .attr("points", function(d, i) {
+        .attr("points", function (d, i) {
           const pos = outerArc.centroid(d);
           pos[0] = radius * 0.95 * (midAngle(d) < Math.PI ? 1 : -1);
           const o = outerArc.centroid(d);
-          const percent = (d.endAngle - d.startAngle) / (2 * Math.PI) * 100;
+          const percent = ((d.endAngle - d.startAngle) / (2 * Math.PI)) * 100;
           if (percent < 3) {
             pos[1] += i * 15;
           }
@@ -89,6 +92,5 @@ export default React.memo(function PieChart() {
     }
   }, []);
 
-  return <div ref={chartRef} style={{ width: "100%", height: "35vh" }}></div>;
+  return <div ref={chartRef} style={{ width: "100%", height: "50vh" }}></div>;
 });
-

@@ -1,24 +1,3 @@
-.header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 3em;
-  padding-top: 2em;
-  margin-bottom: 2em;
-}
-
-.logo {
-  height: 3em;
-  width: 1.5em;
-  background-color: #525252;
-}
-
-.title-split {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-}
-
 .city-banner {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -35,6 +14,10 @@
   height: 2em;
   width: 10em;
   justify-self: end;
+}
+
+.simple-stats {
+  margin: 2em 0;
 }
 
 .middle-content {

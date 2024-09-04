@@ -10,12 +10,7 @@ export default function Dashboard() {
   const [selectedCity, setSelectedCity] = useState("Surat");
   return (
     <>
-      <div className="header">
-        <div className="logo">Logo</div>
-        <div className="title-split">
-          <h2 className="">Rain Water Harvesting Dashboard</h2>
-          <h1 style={{ marginTop: 0 }}>Gujarat</h1>
-        </div>
+      <div className="simple-stats">
         <SimpleStats />
       </div>
       <div className="middle-content">

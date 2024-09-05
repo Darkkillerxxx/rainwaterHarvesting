@@ -1,0 +1,36 @@
+.burger-menu {
+    position: fixed;
+    top: 0;
+    right: -300px;
+    width: 300px;
+    height: 100vh;
+    background-color: #fff;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+    transition: right 0.3s ease-in-out;
+    z-index: 1000;
+  }
+  
+  .burger-menu.open {
+    right: 0;
+  }
+  
+  .close-icon {
+    font-size: 24px;
+    cursor: pointer;
+    text-align: right;
+    padding: 10px;
+  }
+  
+  .burger-menu nav ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .burger-menu nav ul li {
+    padding: 10px 20px;
+  }
+  
+  .burger-menu nav ul li a {
+    text-decoration: none;
+    color: #000;
+  }

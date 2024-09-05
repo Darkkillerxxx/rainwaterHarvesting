@@ -37,3 +37,40 @@ li {
   padding: 1em 2em;
   border-radius: 5px;
 }
+
+.burger-icon {
+  display: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .logo-title {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .header-split {
+    width: 100%;
+  }
+
+  .desktop-nav {
+    display: none;
+  }
+
+  ul {
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+  }
+
+  .burger-icon {
+    display: block;
+    align-self: flex-end;
+  }
+}

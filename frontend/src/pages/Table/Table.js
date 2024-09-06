@@ -1,6 +1,5 @@
-import axios from "axios";
-import React, { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import "./Table.css";
 
 export default function FilteredTable() {
@@ -10,14 +9,14 @@ export default function FilteredTable() {
   const [filters, setFilters] = useState({
     Taluka: "Mauva",
   });
+  const [taluka, setTaluka] = useState("Mauva"); //change to localstorage
+  const [offset, setOffset] = useState(10); //change to localstorage
+
   const itemsPerPage = 10;
   const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
-    const searchParams = new URLSearchParams(location.search);
-    const taluka = searchParams.get("Taluka") || "Mauva";
-    const offset = parseInt(searchParams.get("offset")) || 10;
     setFilters({ Taluka: taluka });
     setCurrentPage(Math.floor(offset / itemsPerPage) + 1);
   }, [location]);
@@ -27,47 +26,37 @@ export default function FilteredTable() {
   }, [filters, currentPage]);
 
   const fetchData = async () => {
-    // try {
-    //   const offset = (currentPage - 1) * itemsPerPage;
-    //   const response = await axios.get(
-    //     `https://rainwaterharvesting-backend.onrender.com/fetchRecords?Taluka=${filters.Taluka}&offset=${offset}`
-    //   );
-    //   setData(response.data.data.data);
-    //   setTotalCount(response.data.data.totalCount);
-    // } catch (error) {
-    //   console.error("Error fetching data:", error);
-    // }
-
     const offset = (currentPage - 1) * itemsPerPage;
-    fetch(`https://rainwaterharvesting-backend.onrender.com/fetchRecords?Taluka=${filters.Taluka}&offset=${offset}`,{
-      method: "GET",
-      headers: {
-        "Cache-Control": "no-cache",
+
+    const response = await fetch(
+      `https://rainwaterharvesting-backend.onrender.com/fetchRecords?Taluka=${filters.Taluka}&offset=${offset}`,
+      {
+        method: "GET",
+        headers: {
+          "Cache-Control": "no-cache",
+        },
       },
-    })
-    // fetch(
-    //   `https://http://localhost:3000/fetchRecords?Taluka=${filters.Taluka}&offset=${offset}`,{
-    //     method: "GET",
-    //     headers: {
-    //       "Cache-Control": "no-cache",
-    //     },
-    //   })
-      .then((response) => {
-        response.json();
-        console.log(response);
-      })
-      .then((res) => {
-        console.log(res);
-        setData(res.data.data.data);
-        setTotalCount(res.data.data.totalCount);
-      })
-      .then((data) => console.log(data))
-      .catch((error) => console.error("Error:", error));
+    );
+
+    const jsonResponse = await response.json();
+    setData(jsonResponse.data.data);
+    setTotalCount(jsonResponse.data.totalCount);
   };
 
   const handlePageChange = (newPage) => {
-    setCurrentPage(newPage);
-    updateURL(newPage);
+    // setCurrentPage(newPage);
+    // fetchData()
+    setCurrentPage((prevPage) => {
+      const updatedPage = newPage;
+      fetchData(); // Call fetchData after setting the new page
+      return updatedPage;
+    });
+
+    // updateURL(newPage);
+  };
+
+  const updateRecordInTable = (item) => {
+    navigate("/form", { state: { item } });
   };
 
   const updateURL = (page) => {
@@ -82,26 +71,36 @@ export default function FilteredTable() {
       <table className="data-table">
         <thead>
           <tr>
+            <th>ID</th>
             <th>DISTRICT</th>
             <th>TALUKA</th>
             <th>VILLAGE</th>
             <th>LOCATION</th>
             <th>INAUGURATION DATE</th>
+            <th>ENG_GRANT</th>
+            <th>Labour</th>
+            <th>IMPLIMANTATION_AUTHORITY</th>
+            <th>LOCATION_G</th>
           </tr>
         </thead>
         <tbody>
           {data.map((item, index) => (
-            <tr key={index}>
+            <tr key={index} onClick={() => updateRecordInTable(item)}>
+              <td>{item.ID}</td>
               <td>{item.DISTRICT}</td>
               <td>{item.TALUKA}</td>
               <td>{item.VILLAGE}</td>
               <td>{item.ENG_LOCATION}</td>
               <td>{item.Inauguration_DATE}</td>
+              <td>{item.ENG_GRANT}</td>
+              <td>{item.Labour}</td>
+              <td>{item.IMPLIMANTATION_AUTHORITY}</td>
+              <td>{item.LOCATION}</td>
             </tr>
           ))}
         </tbody>
       </table>
-      {/* <div className="pagination">
+      <div className="pagination">
         <button
           onClick={() => handlePageChange(currentPage - 1)}
           disabled={currentPage === 1}
@@ -117,7 +116,7 @@ export default function FilteredTable() {
         >
           Next
         </button>
-      </div> */}
+      </div>
     </div>
   );
 }

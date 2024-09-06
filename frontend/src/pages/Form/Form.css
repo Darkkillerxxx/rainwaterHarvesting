@@ -94,3 +94,6 @@ button:hover {
   }
 }
 
+.uploadedImage {
+  max-width: 100%;
+}

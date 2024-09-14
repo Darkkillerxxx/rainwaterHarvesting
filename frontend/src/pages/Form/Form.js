@@ -1,13 +1,19 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import "./Form.css";
 
 const Form = () => {
-  const [DISTRICT, setDistrict] = useState("Surat");
-  const [TALUKA, setTaluka] = useState("BARDOLI");
-  const [VILLAGE, setVillage] = useState("");
+  const location = useLocation();
+  const item = location.state?.item;
+
+  const [talukaOptions, setTalukaOptions] = useState([]);
+
+  const [DISTRICT, setDistrict] = useState(item?.DISTRICT || "Surat");
+  const [TALUKA, setTaluka] = useState(item?.TALUKA || "BARDOLI");
+  const [VILLAGE, setVillage] = useState(item?.VILLAGE || "");
   const [mobile, setMobile] = useState("");
-  const [LOCATION, setAddress] = useState("");
+  const [LOCATION, setAddress] = useState(item?.ENG_LOCATION || "");
   const [Inauguration_DATE, setDate] = useState("");
   const [Latitude, setLatitude] = useState(23.0225);
   const [Longitude, setLongitude] = useState(72.5714);
@@ -19,10 +25,26 @@ const Form = () => {
         setLatitude(position.coords.latitude);
         setLongitude(position.coords.longitude);
       });
+      fetchTalukaOptions();
     } else {
       console.log("Browser does not support geolocation");
     }
   }, []);
+
+  const fetchTalukaOptions = async () => {
+    try {
+      const response = await fetch(
+        "https://rainwaterharvesting-backend.onrender.com/getPicklistValues",
+      );
+      const jsonResponse = await response.json();
+      const uniqueTalukas = [
+        ...new Set(jsonResponse.data.map((item) => item.TALUKA)),
+      ];
+      setTalukaOptions(uniqueTalukas);
+    } catch (error) {
+      console.error("Error fetching Taluka options:", error);
+    }
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -51,7 +73,14 @@ const Form = () => {
   };
 
   const handleFileChange = (e) => {
-    setPhoto(e.target.files[0]);
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPhoto(reader.result); // Set the image URL for preview
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   const handleSubmit = (e) => {
@@ -129,8 +158,11 @@ const Form = () => {
                 value={TALUKA}
                 onChange={handleChange}
               >
-                <option value="BARDOLI">BARDOLI</option>
-                <option value="Other">Other</option>
+                {talukaOptions.map((taluka, index) => (
+                  <option key={index} value={taluka}>
+                    {taluka}
+                  </option>
+                ))}
               </select>
             </div>
           </div>
@@ -187,6 +219,15 @@ const Form = () => {
               type="file"
               onChange={handleFileChange}
             />
+          </div>
+          <div className="form-group">
+            {photo && (
+              <img
+                className="uploadedImage"
+                src={photo}
+                alt="Uploaded Preview"
+              />
+            )}
           </div>
           <button type="submit">Submit</button>
         </form>

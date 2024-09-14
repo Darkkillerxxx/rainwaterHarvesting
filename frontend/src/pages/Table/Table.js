@@ -27,6 +27,7 @@ export default function FilteredTable() {
   }, [filters, currentPage]);
 
   const fetchData = async () => {
+    console.log(30);
     // try {
     //   const offset = (currentPage - 1) * itemsPerPage;
     //   const response = await axios.get(
